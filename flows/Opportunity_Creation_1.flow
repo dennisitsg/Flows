@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <name>Canada_Election_2021_Donation</name>
+        <label>Canada Election 2021 Donation?</label>
+        <locationX>776</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Zealand_Aotearoa</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Canada Election 2021 Donation?</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Canada_Election_2021_Donation</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>350.org Canada Elections</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Type_Campaign_Source_Restricted</targetReference>
+            </connector>
+            <label>TRUE_Canada Election 2021 Donation?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Australia_Donation</name>
+        <label>Is Australia Donation?</label>
+        <locationX>545</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Canada_Election_2021_Donation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Is Australia Donation?</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Is_Australia_Donation</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>350.org Australia AUD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Australia PayPal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Type_to_Australia</targetReference>
+            </connector>
+            <label>TRUE_Is Australia Donation?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_C4_Donation_From_AK</name>
+        <label>Is C4 Donation From AK?</label>
+        <locationX>297</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Is_Australia_Donation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>FALSE_Is C4 Donation From AK?</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Is_C4_Donation_From_AK</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>C4</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Action Fund</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>ActionFund</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Type_to_C4</targetReference>
+            </connector>
+            <label>TRUE_Is C4 Donation From AK?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_New_Zealand_Aotearoa</name>
+        <label>Is New Zealand/Aotearoa</label>
+        <locationX>974</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>FALSE_Is New Zealand/Aotearoa</defaultConnectorLabel>
+        <rules>
+            <name>TRUE_Is_New_Zealand_Aotearoa</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>350.org Aotearoa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ActionKit_Merchant_Account__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>NZ-PayPal</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Type_to_New_Zealand_Aotearoa</targetReference>
+            </connector>
+            <label>TRUE_Is New Zealand/Aotearoa</label>
+        </rules>
+    </decisions>
+    <description>Migrated from the Opportunity Creation process using multiple criteria.</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Creation_1 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Creation_1</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Type_Campaign_Source_Restricted</name>
+        <label>Update Type, Campaign Source, Restricted</label>
+        <locationX>578</locationX>
+        <locationY>647</locationY>
+        <inputAssignments>
+            <field>CampaignId</field>
+            <value>
+                <stringValue>7011U000000yxqHQAQ</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Restricted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>C4</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Type_to_Australia</name>
+        <label>Update Type to Australia</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Australia</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Type_to_C4</name>
+        <label>Update Type to C4</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>C4</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Type_to_New_Zealand_Aotearoa</name>
+        <label>Update Type to New Zealand/Aotearoa</label>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>New Zealand/Aotearoa</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>171</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_C4_Donation_From_AK</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
